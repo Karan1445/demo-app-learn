@@ -558,18 +558,6 @@ function App() {
             </div>
           )}
 
-          {selectedIds.length > 0 && (
-            <div className="grid h-[74px] grid-cols-[58px_minmax(0,1fr)_40px] items-center bg-[#c8f8d8] px-6 text-[#071426] sm:px-6">
-              <div className="flex justify-center pr-0">
-                <input className="h-5 w-5 rounded border-[#637789] accent-[#00a76f]" type="checkbox" checked={allFilteredSelected} onChange={toggleAllFiltered} />
-              </div>
-              <span className="pl-0 text-[15px] font-bold text-[#071426] sm:text-[18px]">{selectedIds.length} selected</span>
-              <button className="inline-flex h-10 w-10 items-center justify-center justify-self-end rounded-lg text-[#071426] hover:bg-[#b5efc8]" type="button" aria-label="Delete selected users" onClick={deleteSelected}>
-                <TrashIcon className="h-6 w-6" />
-              </button>
-            </div>
-          )}
-
           {!loading && dbError && (
             <div className="px-2 py-4 sm:px-6">
               <div className="rounded-2xl border border-[#ffe0dc] bg-[#fff5f3] px-4 py-5 text-center font-semibold text-[#d71920]">
@@ -592,12 +580,36 @@ function App() {
             </div>
           )}
 
+          {selectedIds.length > 0 && (
+            <div className="mx-2 flex h-[72px] items-center justify-between bg-[#c8f8d8] pr-4 text-[#071426] sm:mx-0 sm:pr-6">
+              <label className="flex h-full items-center text-[15px] font-bold text-[#071426] sm:text-[18px]">
+                <span className="flex w-[58px] justify-center">
+                  <input className="h-5 w-5 rounded border-[#637789] accent-[#00a76f]" type="checkbox" checked={allFilteredSelected} onChange={toggleAllFiltered} aria-label="Select all filtered users" />
+                </span>
+                <span className="px-5 sm:px-6">{selectedIds.length} selected</span>
+              </label>
+              <button className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[#071426] transition hover:bg-[#b5efc8]" type="button" aria-label="Delete selected users" onClick={deleteSelected}>
+                <TrashIcon className="h-6 w-6" />
+              </button>
+            </div>
+          )}
+
           <div className="scrollbar-hide overflow-x-auto px-2 sm:px-0">
-            <table className="w-full min-w-[1120px] border-collapse text-[#071426]">
+            <div className="min-w-[1396px]">
+            <table className="w-full table-fixed border-collapse text-[#071426]">
+              <colgroup>
+                <col className="w-[58px]" />
+                <col className="w-[310px]" />
+                <col className="w-[220px]" />
+                <col className="w-[300px]" />
+                <col className="w-[240px]" />
+                <col className="w-[150px]" />
+                <col className="w-[118px]" />
+              </colgroup>
               {selectedIds.length === 0 && (
               <thead>
                   <tr className="h-[72px] bg-[#f4f6f8] text-left text-[17px] text-[#607386]">
-                    <th className="w-[58px] px-6 pr-0 text-center">
+                    <th className="w-[58px] px-0 text-center">
                       <input className="h-5 w-5 rounded border-[#637789] accent-[#00a76f]" type="checkbox" checked={allFilteredSelected} onChange={toggleAllFiltered} aria-label="Select all filtered users" />
                     </th>
                     <SortableHeader label="Name" sortKey="name" sortConfig={sortConfig} onSort={handleSort} />
@@ -638,7 +650,7 @@ function App() {
                       selectedIds.includes(user.id) && 'bg-[#f5fbfb]'
                     )}
                   >
-                    <td className={cx('w-[58px] px-6 pr-0 text-center', denseEnabled ? 'py-0' : 'py-4')}>
+                    <td className={cx('w-[58px] px-0 text-center', denseEnabled ? 'py-0' : 'py-4')}>
                       <input
                         className="h-5 w-5 rounded border-[#637789] accent-[#00a76f]"
                         type="checkbox"
@@ -682,6 +694,7 @@ function App() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           <footer className="flex min-h-[78px] flex-col gap-4 border-t border-[#edf1f4] px-2 py-4 text-[15px] text-[#071426] sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:text-[18px]">
